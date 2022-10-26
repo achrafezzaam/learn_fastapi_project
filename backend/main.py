@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .model import Todo
+from model import Todo
 
 app = FastAPI()
 
@@ -9,10 +9,10 @@ from database import (
     fetch_all_todos,
     create_todo,
     update_todo,
-    delete_todo
+    remove_todo,
 )
 
-origins = ['https://localhost:3000']
+origins = ['http://localhost:3000']
 
 app.add_middleware(
     CORSMiddleware,
@@ -54,7 +54,7 @@ async def update_todo(title:str, desc:str):
 
 @app.delete("/api/todo/{title}")
 async def delete_todo(title):
-    response = await delete_todo(title)
+    response = await remove_todo(title)
     if response:
-        return response
+        return "Successfully deleted the Todo"
     raise HTTPException(404, "There is no Todo item with this title")

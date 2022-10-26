@@ -2,7 +2,7 @@ from model import Todo
 
 import motor.motor_asyncio
 
-client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017')
+client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017/')
 database = client.TodoList
 collection = database.todo
 
@@ -29,6 +29,6 @@ async def update_todo(title, desc):
     document = await collection.find_one({"title": title})
     return document
 
-async def delete_todo(title):
+async def remove_todo(title):
     await collection.delete_one({"title":title})
-    return "The Todo was deleted successfully"
+    return True
